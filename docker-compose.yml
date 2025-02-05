@@ -1,0 +1,53 @@
+services:
+  postresql:
+    container_name: postgres_givuli
+    image: postgres
+    environment:
+      POSTGRES_USER: givuli
+      POSTGRES_PASSWORD: 151199
+      PGDATA: /data/postgres
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      givuli_network:
+
+  mongodb:
+    container_name: mongo_givuli
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: givuli
+      MONGO_INITDB_ROOT_PASSWORD: 151199
+    volumes:
+      - mongo:/data/db
+      - mongo_config:/data/configdb
+    ports:
+     - "27017:27017"
+    networks:
+      givuli_network:
+
+  mongo-express:
+    container_name: givuli_mongo_express
+    image: mongo-express:latest
+    depends_on:
+      - mongodb
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: givuli
+      ME_CONFIG_MONGODB_ADMINPASSWORD: 151199
+      ME_CONFIG_MONGODB_SERVER: mongo_givuli
+      ME_CONFIG_BASICAUTH_USERNAME: givuli
+      ME_CONFIG_BASICAUTH_PASSWORD: 151199
+    ports:
+      - "8081:8081"
+    networks:
+      givuli_network:
+
+networks:
+  givuli_network:
+    driver: bridge
+
+volumes:
+  postgres:
+  mongo:
+  mongo_config:
