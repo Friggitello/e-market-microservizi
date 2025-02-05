@@ -5,7 +5,6 @@ services:
     environment:
       POSTGRES_USER: givuli
       POSTGRES_PASSWORD: 151199
-      PGDATA: /data/postgres
     volumes:
       - postgres:/var/lib/postgresql/data
     ports:
