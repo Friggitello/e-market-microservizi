@@ -10,7 +10,7 @@ DA CAMBIARE
 - **Spring Cloud** - Per il service discovery, load balancing e configurazione centralizzata
 - **Spring Security** - Per l'autenticazione e l'autorizzazione
 - **JWT (JSON Web Token)** - Per la gestione dei token di autenticazione
-- **MySQL** - Database relazionale
+- **PostgreSQL** - Database relazionale
 - **Postman** - Per il testing delle API
 
 ## 📌 Struttura dei Microservizi
