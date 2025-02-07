@@ -1,5 +1,5 @@
 services:
-  postresql:
+  postgresql:
     container_name: postgres_givuli
     image: postgres
     environment:
