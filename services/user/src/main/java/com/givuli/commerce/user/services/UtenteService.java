@@ -2,6 +2,7 @@ package com.givuli.commerce.user.services;
 
 import com.givuli.commerce.user.dto.mappers.IndirizzoMapper;
 import com.givuli.commerce.user.dto.mappers.UtenteMapper;
+import com.givuli.commerce.user.dto.requests.IndirizzoRequest;
 import com.givuli.commerce.user.dto.requests.UtenteRequest;
 import com.givuli.commerce.user.dto.requests.UtenteUpdateRequest;
 import com.givuli.commerce.user.dto.responses.EntityIdResponse;
@@ -70,18 +71,17 @@ public class UtenteService {
                 .build();
     }
 
-    public EntityIdResponse aggiungiIndirizzo(Long idUtente, Long idIndirizzo){
+    public EntityIdResponse aggiungiIndirizzo(Long idUtente, IndirizzoRequest request){
         Utente utente = utenteRepository
                 .findById(idUtente)
                 .orElseThrow(() -> new UtenteNotFoundException(String.format("Utente con id %d non trovato", idUtente)));
-        Indirizzo indirizzo = indirizzoService.getIndirizzoById(idIndirizzo);
+        Indirizzo indirizzo = indirizzoMapper.toEntity(request);
+        indirizzo.setUtente(utente);
+        indirizzoService.createIndirizzo(indirizzo);
         List<Indirizzo> indirizziUtente = utente.getIndirizzi();
         indirizziUtente.add(indirizzo);
         utenteRepository.save(utente);
-        return EntityIdResponse
-                .builder()
-                .id(utente.getId())
-                .build();
+        return EntityIdResponse.builder().id(indirizzo.getId()).build();
     }
 
     public GenericResponse rimuoviIndirizzo(Long idUtente, Long idIndirizzo){
@@ -91,6 +91,7 @@ public class UtenteService {
         Indirizzo indirizzo = indirizzoService.getIndirizzoById(idIndirizzo);
         List<Indirizzo> indirizziUtente = utente.getIndirizzi();
         indirizziUtente.remove(indirizzo);
+        indirizzoService.deleteIndirizzoById(indirizzo.getId());
         utenteRepository.save(utente);
         return GenericResponse
                 .builder()

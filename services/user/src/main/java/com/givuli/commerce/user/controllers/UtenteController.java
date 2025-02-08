@@ -1,5 +1,6 @@
 package com.givuli.commerce.user.controllers;
 
+import com.givuli.commerce.user.dto.requests.IndirizzoRequest;
 import com.givuli.commerce.user.dto.requests.UtenteRequest;
 import com.givuli.commerce.user.dto.requests.UtenteUpdateRequest;
 import com.givuli.commerce.user.dto.responses.EntityIdResponse;
@@ -47,12 +48,12 @@ public class UtenteController {
         return new ResponseEntity<>(utenteService.deleteUtenteById(id), HttpStatus.OK);
     }
 
-    @PutMapping("/add-indirizzo/{idUtente}/{idIndirizzo}")
-    public ResponseEntity<EntityIdResponse> addIndirizzo(@PathVariable Long idUtente, @PathVariable Long idIndirizzo){
-        return new ResponseEntity<>(utenteService.aggiungiIndirizzo(idUtente,idIndirizzo), HttpStatus.CREATED);
+    @PostMapping("/add-indirizzo/{idUtente}")
+    public ResponseEntity<EntityIdResponse> addIndirizzo(@PathVariable Long idUtente, @RequestBody IndirizzoRequest request){
+        return new ResponseEntity<>(utenteService.aggiungiIndirizzo(idUtente, request), HttpStatus.CREATED);
     }
 
-    @PutMapping("/delete-indirizzo/{idUtente}/{idIndirizzo}")
+    @DeleteMapping("/delete-indirizzo/{idUtente}/{idIndirizzo}")
     public ResponseEntity<GenericResponse> deleteIndirizzo(@PathVariable Long idUtente, @PathVariable Long idIndirizzo){
         return new ResponseEntity<>(utenteService.rimuoviIndirizzo(idUtente,idIndirizzo), HttpStatus.CREATED);
     }

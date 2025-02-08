@@ -29,11 +29,6 @@ public class IndirizzoController {
         return new ResponseEntity<>(indirizzoService.getAllToResponse(), HttpStatus.OK);
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<EntityIdResponse> createIndirizzo(@RequestBody IndirizzoRequest request){
-        return new ResponseEntity<>(indirizzoService.createIndirizzo(request), HttpStatus.CREATED);
-    }
-
     @PutMapping("/update/{id}")
     public ResponseEntity<EntityIdResponse> updateIndirizzo(@PathVariable Long id, @RequestBody IndirizzoUpdateRequest request){
         return new ResponseEntity<>(indirizzoService.updateIndirizzo(id, request), HttpStatus.CREATED);

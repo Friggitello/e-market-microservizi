@@ -47,8 +47,8 @@ public class IndirizzoService {
         return indirizzoRepository.findAll().stream().map(indirizzoMapper::toResponse).toList();
     }
 
-    public EntityIdResponse createIndirizzo(IndirizzoRequest request){
-        Indirizzo indirizzo = indirizzoRepository.save(indirizzoMapper.toEntity(request));
+    public EntityIdResponse createIndirizzo(Indirizzo request){
+        Indirizzo indirizzo = indirizzoRepository.save(request);
         return EntityIdResponse
                 .builder()
                 .id(indirizzo.getId())
